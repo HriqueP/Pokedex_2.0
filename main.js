@@ -1,6 +1,7 @@
 const btnSearch = document.getElementById("btn-search");
 const imgSprite = document.querySelector(".screen-sprite");
 const informationsPanel = document.querySelector(".pokemon-informations");
+const typesPanel = document.querySelector(".pokemon-types");
 
 btnSearch.addEventListener("click", showPokemon);
 
@@ -13,46 +14,49 @@ function showPokemon() {
   // Calls the API
   fetch(`https://pokeapi.co/api/v2/pokemon/${inputValue}`)
     .then((response) => {
-      console.log(response);
       if (response.ok) {
         response.json().then((data) => {
           console.log(data);
-          console.log(`No: ${data.id}`);
-          console.log(`NAME: ${data.name}`);
-          console.log(`HP: ${data.stats[0].base_stat}`);
-          console.log(`ATTACK: ${data.stats[1].base_stat}`);
-          console.log(`DEFENSE: ${data.stats[2].base_stat}`);
-          console.log(`SP. ATK: ${data.stats[3].base_stat}`);
-          console.log(`SP. DEF: ${data.stats[4].base_stat}`);
-          console.log(`SPEED: ${data.stats[5].base_stat}`);
 
-          // Set src for image tag
+          // Set src for image sprite
           imgSprite.src = data.sprites.front_default;
 
+          // Choose a random abilituy for the pokemon
+          let rndNum = getRndInteger(0, data.abilities.length);
+
           // Set Pokemon general informations
-          // const divInfo = document.createElement("div");
-          // divInfo.innerHTML = "<p>Passed</p>";
-          informationsPanel.innerHTML = `
-          <div class="pokemon-informations-name">
-            <p>
-              No.${data.id} - ${data.name}
-              <span
-                ><img
-                  src="./assets/Pokeball_Icon.png"
-                  width="20px"
-                  height="auto"
-              /></span>
-            </p>
-          </div>
-          <div class="pokemon-informations-stats">
-            <p>HP: ${data.stats[0].base_stat}</p>
-            <p>ATTACK: ${data.stats[1].base_stat}</p>
-            <p>DEFENSE: ${data.stats[2].base_stat}</p>
-            <p>SP. ATK: ${data.stats[3].base_stat}</p>
-            <p>SP. DEF: ${data.stats[4].base_stat}</p>
-            <p>SPEED: ${data.stats[5].base_stat}</p>
-          </div>
+          const infotmationsComponent = `
+            <div class="pokemon-informations-name">
+              <p>
+                No.${data.id} - ${data.name}
+                <span
+                  ><img
+                    src="./assets/Pokeball_Icon.png"
+                    width="20px"
+                    height="auto"
+                /></span>
+              </p>
+            </div>
+            <div class="pokemon-informations-stats">
+              <p>HP: ${data.stats[0].base_stat}</p>
+              <p>Attack: ${data.stats[1].base_stat}</p>
+              <p>Defense: ${data.stats[2].base_stat}</p> 
+              <p>Sp. Atk: ${data.stats[3].base_stat}</p>
+              <p>Sp. Def: ${data.stats[4].base_stat}</p>
+              <p>Speed: ${data.stats[5].base_stat}</p>
+            </div>
+            <div class="pokemon-information-misc">
+              <p>Ability: ${data.abilities[rndNum].ability.name}</p>
+              <p>Height: ${data.height}.00 - Weight: ${data.weight}.00</p>
+            </div>
           `;
+          informationsPanel.innerHTML = infotmationsComponent;
+
+          // Set Pokemon types information
+          typesPanel.innerHTML = ""; // Cleans the panel first
+          data.types.forEach((element) => {
+            typesPanel.innerHTML += `<img src="./assets/Types/${element.type.name}.png" class="type" width="50px" />`;
+          });
         });
       } else {
         alert("Pokemon not found!");
@@ -71,3 +75,8 @@ inputField.addEventListener("keydown", (e) => {
     showPokemon();
   }
 });
+
+// Function to returno a random number (min included and max excluded)
+function getRndInteger(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
