@@ -8,7 +8,7 @@
   --bg-podekex: #d30a40;
   --bg-screen: #e3e3e3;
   --bg-input-screen: #5fc480;
-  --bg-information-screen: #3794c0;
+  --bg-information-screen: #ced3c6;
   --bg-types: #22c4e9;
 
   --border-balls: #f4f3f2;
@@ -203,7 +203,7 @@ body {
   border: 3px solid var(--borders);
   border-radius: 10px;
   padding: 20px;
-  color: var(--text-light);
+  color: var(--text-dark);
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -227,7 +227,7 @@ body {
 }
 
 .pokemon-information-misc {
-  color: var(--text-light);
+  color: var(--text-dark);
   display: flex;
   flex-wrap: wrap;
   gap: 10px 0px;
