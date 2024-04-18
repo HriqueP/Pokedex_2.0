@@ -6,8 +6,9 @@ const imgSprite = document.querySelector(".screen-sprite");
 const informationsPanel = document.querySelector(".pokemon-informations");
 const typesPanel = document.querySelector(".pokemon-types");
 
-btnSearch.addEventListener("click", showPokemon);
+const customAlert = document.querySelector(".custom-alert");
 
+btnSearch.addEventListener("click", showPokemon);
 function showPokemon() {
   // Takes the value of the input search field (pokemon name)
   const inputValue = document
@@ -20,12 +21,10 @@ function showPokemon() {
     .then((response) => {
       if (response.ok) {
         response.json().then((data) => {
-          console.log(data);
-
           // Set src for image sprite
           imgSprite.src = data.sprites.front_default;
 
-          // Choose a random abilituy for the pokemon
+          // Choose a random ability for the pokemon
           let rndNum = getRndInteger(0, data.abilities.length);
 
           // Set Pokemon general informations
@@ -61,11 +60,15 @@ function showPokemon() {
           data.types.forEach((element) => {
             typesPanel.innerHTML += `<img src="./assets/Types/${element.type.name}.png" class="type" width="50px" />`;
           });
-
-          shiny = data.sprites.shiny_default;
         });
       } else {
-        alert("Pokemon not found!");
+        customAlert.style.top = "10px";
+        setTimeout(function () {
+          customAlert.style.top = "-100px";
+          setTimeout(function () {
+            window.location.reload();
+          }, 600);
+        }, 2000);
       }
     })
     .catch((error) => {
