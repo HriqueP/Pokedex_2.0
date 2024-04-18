@@ -9,7 +9,6 @@
   --bg-screen: #e3e3e3;
   --bg-input-screen: #5fc480;
   --bg-information-screen: #ced3c6;
-  --bg-types: #22c4e9;
 
   --border-balls: #f4f3f2;
   --bg-ball-1: #12bbd2;
@@ -234,7 +233,7 @@ body {
 }
 
 .pokemon-types {
-  background-color: var(--bg-screen);
+  background-color: var(--bg-information-screen);
   width: 100%;
   min-height: 70px;
   border: 3px solid var(--borders);
@@ -258,4 +257,7 @@ body {
 .btn {
   padding: 0.25rem;
   width: 50%;
+  border: 3px solid var(--borders);
+  border-radius: 10px;
+  transition: 0.2s;
 }

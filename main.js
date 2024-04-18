@@ -1,9 +1,10 @@
 const btnSearch = document.getElementById("btn-search");
+const btnShiny = document.getElementById("btn-shiny");
+const btnCry = document.getElementById("btn-cry");
+
 const imgSprite = document.querySelector(".screen-sprite");
 const informationsPanel = document.querySelector(".pokemon-informations");
 const typesPanel = document.querySelector(".pokemon-types");
-const btnShiny = document.getElementById("btn-shiny");
-const btnCry = document.getElementById("btn-cry");
 
 btnSearch.addEventListener("click", showPokemon);
 
@@ -12,6 +13,7 @@ function showPokemon() {
   const inputValue = document
     .getElementById("input-search")
     .value.toLowerCase();
+  btnShiny.innerText = "Shiny Version";
 
   // Calls the API
   fetch(`https://pokeapi.co/api/v2/pokemon/${inputValue}`)
@@ -76,6 +78,7 @@ function showPokemon() {
 const inputField = document.getElementById("input-search");
 inputField.addEventListener("keydown", (e) => {
   if (e.key == "Enter" && inputField.value != "") {
+    btnShiny.innerText = "Shiny Version";
     showPokemon();
   }
 });
@@ -99,8 +102,10 @@ function showShiny() {
           // Change between the shiny and normal version of the pokemon
           if (imgSprite.src == data.sprites.front_default) {
             imgSprite.src = data.sprites.front_shiny;
+            btnShiny.innerText = "Normal Version";
           } else {
             imgSprite.src = data.sprites.front_default;
+            btnShiny.innerText = "Shiny Version";
           }
         });
       } else {
